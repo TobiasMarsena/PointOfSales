@@ -2,6 +2,8 @@ package com.rks.project.pointofsales;
 
 import com.rks.project.pointofsales.Category.Category;
 import com.rks.project.pointofsales.Category.CategoryRepository;
+import com.rks.project.pointofsales.Item.Item;
+import com.rks.project.pointofsales.Item.ItemRepository;
 import com.rks.project.pointofsales.Users.Users;
 import com.rks.project.pointofsales.Users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class WebController {
     UsersRepository usersRepository;
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    ItemRepository itemRepository;
 
     @RequestMapping(path = "/")
     public String home() {
@@ -64,12 +68,24 @@ public class WebController {
         }
     }
 
+    @PostMapping(path = "/item/create")
+    public String createItem(@RequestParam(value = "barcode") int barcode,
+                             @RequestParam(value = "item_name") String name,
+                             @RequestParam(value = "price") long price,
+                             @RequestParam(value = "category") String category,
+                             @RequestParam(value = "desc") String description, Model model){
+        int category_id = categoryRepository.findByNama(category).get().getId();
+        itemRepository.save(new Item(barcode, name, category_id, price, description));
+        model.addAttribute("message", "Add new item successful");
+        return "create";
+    }
+
     @PostMapping(path = "/category/create")
     public String createCategory(@RequestParam(value = "new_category") String newCategory, Model model){
         Optional<Category> category = categoryRepository.findByNama(newCategory);
         if (!(category.isPresent())){
             categoryRepository.save(new Category(83910, newCategory));
-            model.addAttribute("message", "Succesfully add " + newCategory + " category");
+            model.addAttribute("message", "Succesfully add '" + newCategory + "' category");
             return "create";
         } else {
             model.addAttribute("message", "Category already exist");
