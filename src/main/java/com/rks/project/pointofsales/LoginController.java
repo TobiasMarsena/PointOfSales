@@ -27,11 +27,15 @@ public class LoginController {
         if (users.isPresent()){
             model.addAttribute("username", username);
             model.addAttribute("password", password);
-            model.addAttribute("role", users.get().getRole());
-            return "admin page/create";
+            if (users.get().getRole().equalsIgnoreCase("Admin")){
+                return "create";
+            } else {
+                model.addAttribute("role", users.get().getRole());
+                return "user";
+            }
         } else {
             model.addAttribute("message", "Invalid username or password");
-            return "login/index";
+            return "login";
         }
     }
 }
