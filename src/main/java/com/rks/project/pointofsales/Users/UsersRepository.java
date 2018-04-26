@@ -2,7 +2,6 @@ package com.rks.project.pointofsales.Users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
 import java.util.Optional;
 
