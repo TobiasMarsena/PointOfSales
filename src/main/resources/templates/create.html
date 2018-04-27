@@ -51,7 +51,7 @@ body {font-size:16px;}
 	</table>
 	<!-- Create New Item-->
 	<div class="w3-container" id="create" style="margin-left:100px">
-		<form action="/item/create" method="post">
+		<form th:object="${item}" action="/item/create" method="post">
 			<div class="w3-section">
 				<input class="w3-input w3-border" type="number" id="barcode" name="barcode" placeholder="Barcode" required="" autocomplete="off" autofocus>
 			</div>
@@ -63,10 +63,11 @@ body {font-size:16px;}
 			</div>
 			<div class="w3-section">
 				<select class="w3-input w3-dropdown w3-border" id="category" name="category" required="" onchange="createNew()">
-					<option value="">Category</option>
-					<option value="">Category</option>
-					<option value="">Category</option>
-					<option value="/category">Create New Category</option>
+					<option value="">- Select category</option>
+					<option th:each="category : ${categories}"
+							th:value="${category.id}"
+							th:text="${category.nama}"></option>
+					<option value="/category" >Create New Category</option>
 				</select>
 			</div>
 			<div class="w3-section">
@@ -97,7 +98,7 @@ function onClick(element) {
 // Create New Category
 function createNew(){
 	var url = document.getElementById('category').value;
-        if(url != '') {
+        if(url == '/category') {
             window.location = url;
         }
 }

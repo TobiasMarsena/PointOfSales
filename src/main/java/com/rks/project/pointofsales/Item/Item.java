@@ -18,20 +18,20 @@ public class Item implements Serializable{
     @NotNull
     private String nama;
     @NotNull
-    private int category_id;
+    private long category_id;
     @NotNull
     private long harga;
     private String description;
 
     protected Item() {}
 
-    public Item(@NotNull int kode, @NotNull String nama, @NotNull int category_id, @NotNull long harga) {
+    public Item(@NotNull int kode, @NotNull String nama, @NotNull long category_id, @NotNull long harga) {
         this.kode = kode;
         this.nama = nama;
         this.category_id = category_id;
         this.harga = harga;
     }
-    public Item(@NotNull int kode, @NotNull String nama, @NotNull int category_id, @NotNull long harga, String description) {
+    public Item(@NotNull int kode, @NotNull String nama, @NotNull long category_id, @NotNull long harga, String description) {
         this.kode = kode;
         this.nama = nama;
         this.category_id = category_id;
@@ -53,10 +53,10 @@ public class Item implements Serializable{
         this.nama = nama;
     }
 
-    public int getCategory_id() {
+    public long getCategory_id() {
         return category_id;
     }
-    public void setCategory_id(int category_id) {
+    public void setCategory_id(long category_id) {
         this.category_id = category_id;
     }
 

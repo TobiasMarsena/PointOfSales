@@ -1,6 +1,7 @@
 package com.rks.project.pointofsales.Category;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -14,22 +15,22 @@ import java.io.Serializable;
 public class Category implements Serializable{
     @Id
     @NotNull
-    private int id;
+    @GeneratedValue
+    private long id;
 
     @NotNull
     private String nama;
 
     protected Category() {}
 
-    public Category(@NotNull int id, @NotNull String nama) {
-        this.id = id;
+    public Category(@NotNull String nama) {
         this.nama = nama;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

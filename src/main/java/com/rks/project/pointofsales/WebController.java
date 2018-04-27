@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -33,7 +34,16 @@ public class WebController {
     }
 
     @RequestMapping(path = "/item")
-    public String item() {
+    public String item1(Model model) {
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories);
+        return "create";
+    }
+
+    @RequestMapping(path = "/login")
+    public String item2(Model model) {
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories);
         return "create";
     }
 
@@ -72,9 +82,9 @@ public class WebController {
     public String createItem(@RequestParam(value = "barcode") int barcode,
                              @RequestParam(value = "item_name") String name,
                              @RequestParam(value = "price") long price,
-                             @RequestParam(value = "category") String category,
+                             @RequestParam(value = "category") long category,
                              @RequestParam(value = "desc") String description, Model model){
-        int category_id = categoryRepository.findByNama(category).get().getId();
+        long category_id = categoryRepository.findById(category).get().getId();
         itemRepository.save(new Item(barcode, name, category_id, price, description));
         model.addAttribute("message", "Add new item successful");
         return "create";
@@ -84,7 +94,7 @@ public class WebController {
     public String createCategory(@RequestParam(value = "new_category") String newCategory, Model model){
         Optional<Category> category = categoryRepository.findByNama(newCategory);
         if (!(category.isPresent())){
-            categoryRepository.save(new Category(83910, newCategory));
+            categoryRepository.save(new Category(newCategory));
             model.addAttribute("message", "Succesfully add '" + newCategory + "' category");
             return "create";
         } else {
