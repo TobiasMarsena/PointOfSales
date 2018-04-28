@@ -1,4 +1,4 @@
-package com.rks.project.pointofsales.Users;
+package com.rks.project.pointofsales.users;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -61,7 +61,7 @@ public class Users implements Serializable {
     // To String
     @Override
     public String toString() {
-        return "Users{" +
+        return "users{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +

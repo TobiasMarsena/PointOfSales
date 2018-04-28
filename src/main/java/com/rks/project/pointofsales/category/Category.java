@@ -1,4 +1,4 @@
-package com.rks.project.pointofsales.Category;
+package com.rks.project.pointofsales.category;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,12 +19,12 @@ public class Category implements Serializable{
     private long id;
 
     @NotNull
-    private String nama;
+    private String name;
 
     protected Category() {}
 
     public Category(@NotNull String nama) {
-        this.nama = nama;
+        this.name = nama;
     }
 
     public long getId() {
@@ -34,18 +34,18 @@ public class Category implements Serializable{
         this.id = id;
     }
 
-    public String getNama() {
-        return nama;
+    public String getName() {
+        return name;
     }
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return "Category{" +
+        return "category{" +
                 "id=" + id +
-                ", nama='" + nama + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

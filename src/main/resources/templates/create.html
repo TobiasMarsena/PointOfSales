@@ -49,7 +49,7 @@ body {font-size:16px;}
 			<td th:text="${message}"/>
 		</tr>
 	</table>
-	<!-- Create New Item-->
+	<!-- Create New item-->
 	<div class="w3-container" id="create" style="margin-left:100px">
 		<form th:object="${item}" action="/item/create" method="post">
 			<div class="w3-section">
@@ -66,7 +66,7 @@ body {font-size:16px;}
 					<option value="">- Select category</option>
 					<option th:each="category : ${categories}"
 							th:value="${category.id}"
-							th:text="${category.nama}"></option>
+							th:text="${category.name}"></option>
 					<option value="/category" >Create New Category</option>
 				</select>
 			</div>

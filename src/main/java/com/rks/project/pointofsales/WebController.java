@@ -1,17 +1,18 @@
 package com.rks.project.pointofsales;
 
-import com.rks.project.pointofsales.Category.Category;
-import com.rks.project.pointofsales.Category.CategoryRepository;
-import com.rks.project.pointofsales.Item.Item;
-import com.rks.project.pointofsales.Item.ItemRepository;
-import com.rks.project.pointofsales.Users.Users;
-import com.rks.project.pointofsales.Users.UsersRepository;
+import com.rks.project.pointofsales.category.Category;
+import com.rks.project.pointofsales.category.CategoryRepository;
+import com.rks.project.pointofsales.item.Item;
+import com.rks.project.pointofsales.item.ItemRepository;
+import com.rks.project.pointofsales.users.Users;
+import com.rks.project.pointofsales.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,15 +34,20 @@ public class WebController {
         return "login";
     }
 
-    @RequestMapping(path = "/item")
-    public String item1(Model model) {
+    @RequestMapping(path = "/user")
+    public String user() {
+        return "user";
+    }
+
+    @RequestMapping(path = "/admin")
+    public String admin(Model model) {
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
         return "create";
     }
 
-    @RequestMapping(path = "/login")
-    public String item2(Model model) {
+    @RequestMapping(path = "/item")
+    public String item(Model model) {
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
         return "create";
@@ -60,26 +66,26 @@ public class WebController {
     public String category() { return "create_category";}
 
     @PostMapping(path = "/login")
-    public String login(@RequestParam(value = "username") String username,
+    public ModelAndView login(@RequestParam(value = "username") String username,
                         @RequestParam(value = "password") String password, Model model) {
         Optional<Users> users = usersRepository.findByUsernameAndPassword(username, password);
         if (users.isPresent()){
             model.addAttribute("username", username);
             model.addAttribute("password", password);
             if (users.get().getRole().equalsIgnoreCase("Admin")){
-                return "create";
+                return new ModelAndView("redirect:/admin");
             } else {
                 model.addAttribute("role", users.get().getRole());
-                return "user";
+                return new ModelAndView("redirect:/user");
             }
         } else {
             model.addAttribute("message", "Invalid username or password");
-            return "login";
+            return new ModelAndView("redirect:/login");
         }
     }
 
     @PostMapping(path = "/item/create")
-    public String createItem(@RequestParam(value = "barcode") int barcode,
+    public ModelAndView createItem(@RequestParam(value = "barcode") int barcode,
                              @RequestParam(value = "item_name") String name,
                              @RequestParam(value = "price") long price,
                              @RequestParam(value = "category") long category,
@@ -87,19 +93,19 @@ public class WebController {
         long category_id = categoryRepository.findById(category).get().getId();
         itemRepository.save(new Item(barcode, name, category_id, price, description));
         model.addAttribute("message", "Add new item successful");
-        return "create";
+        return new ModelAndView("redirect:/admin");
     }
 
     @PostMapping(path = "/category/create")
-    public String createCategory(@RequestParam(value = "new_category") String newCategory, Model model){
-        Optional<Category> category = categoryRepository.findByNama(newCategory);
+    public ModelAndView createCategory(@RequestParam(value = "new_category") String newCategory, Model model){
+        Optional<Category> category = categoryRepository.findByName(newCategory);
         if (!(category.isPresent())){
             categoryRepository.save(new Category(newCategory));
             model.addAttribute("message", "Succesfully add '" + newCategory + "' category");
-            return "create";
+            return new ModelAndView("redirect:/admin");
         } else {
-            model.addAttribute("message", "Category already exist");
-            return  "create";
+            model.addAttribute("message", "category already exist");
+            return  new ModelAndView("redirect:/admin");
         }
     }
 

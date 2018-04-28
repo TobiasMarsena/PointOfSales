@@ -1,4 +1,4 @@
-package com.rks.project.pointofsales.Item;
+package com.rks.project.pointofsales.item;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

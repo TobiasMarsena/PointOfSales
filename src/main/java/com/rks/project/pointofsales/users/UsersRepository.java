@@ -1,4 +1,4 @@
-package com.rks.project.pointofsales.Users;
+package com.rks.project.pointofsales.users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
