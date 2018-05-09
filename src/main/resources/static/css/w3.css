@@ -1,5 +1,4 @@
-﻿/* W3.CSS 4.10 February 2018 by Jan Egil and Borge Refsnes */
-html {
+﻿html {
 	box-sizing:border-box
 }
 *,*:before,*:after {
@@ -96,7 +95,7 @@ button,select {
 }
 button,html [type=button],[type=reset],[type=submit] {
 	-webkit-appearance:button;
-	
+
 }
 button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner {
 	border-style:none;
@@ -127,7 +126,7 @@ textarea {
 	height:auto
 }
 input[type="number"] {
-    -moz-appearance: textfield;
+	-moz-appearance: textfield;
 }
 [type=search] {
 	-webkit-appearance:textfield;
@@ -198,24 +197,27 @@ a {
 	color:inherit
 }
 .w3-table,.w3-table-all {
+	border:1px solid #ccc;
 	border-collapse:collapse;
 	border-spacing:0;
-	width:100%;
-	display:table
+	width:90%;
+	table-layout:fixed;
+	display:table;
+
 }
 .w3-table-all {
 	border:1px solid #ccc
 }
 .w3-bordered tr,.w3-table-all tr {
-	border-bottom:1px solid #ddd
+	border-bottom:1px solid #ddd;
 }
 .w3-striped tbody tr:nth-child(even) {
 	background-color:#f1f1f1
 }
-.w3-table-all tr:nth-child(odd) {
+.w3-table-all tr:nth-child(even) {
 	background-color:#fff
 }
-.w3-table-all tr:nth-child(even) {
+.w3-table-all tr:nth-child(odd) {
 	background-color:#f1f1f1
 }
 .w3-hoverable tbody tr:hover,.w3-ul.w3-hoverable li:hover {
@@ -230,6 +232,12 @@ a {
 	text-align:left;
 	vertical-align:top
 }
+/* addition */
+.w3-table th, .w3-table-all th{
+	background-color: #f44336;
+	color: white;
+}
+
 .w3-table th:first-child,.w3-table td:first-child,.w3-table-all th:first-child,.w3-table-all td:first-child {
 	padding-left:16px
 }
@@ -442,7 +450,7 @@ a {
 .w3-block {
 	display:block;
 	width:20%;
-	
+
 }
 .w3-responsive {
 	display:block;
@@ -981,6 +989,9 @@ a {
 }
 .w3-border {
 	border:1px solid #ccc!important
+}
+#search{
+	border-radius:8px /*search outline */
 }
 .w3-border-top {
 	border-top:1px solid #ccc!important
