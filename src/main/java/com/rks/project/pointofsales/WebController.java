@@ -4,8 +4,9 @@ import com.rks.project.pointofsales.category.Category;
 import com.rks.project.pointofsales.category.CategoryRepository;
 import com.rks.project.pointofsales.item.Item;
 import com.rks.project.pointofsales.item.ItemRepository;
-import com.rks.project.pointofsales.users.Users;
 import com.rks.project.pointofsales.users.UsersRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,8 @@ import java.util.Optional;
  */
 @Controller
 public class WebController {
+    private static final Logger log = LoggerFactory.getLogger(PointofsalesApplication.class);
+
     @Autowired
     UsersRepository usersRepository;
     @Autowired
@@ -57,8 +60,20 @@ public class WebController {
     @RequestMapping(path = "/admin/category")
     public String category() { return "create_category";}
 
-    @RequestMapping(path = "/admin/search")
-    public String search() { return "search";}
+    @GetMapping(path = "/admin/search")
+    public String searchResult(@RequestParam(value = "search", required = false) String search,
+                               Model model) {
+        if (search != null) {
+            Optional<Item> items = itemRepository.findByName(search);
+            if (items.isPresent()) {
+                model.addAttribute("items", items.get());
+            }
+        } else {
+            List<Item> items = itemRepository.findAll();
+            model.addAttribute("items", items);
+        }
+        return "search";
+    }
 
     @RequestMapping(path = "/admin/manage")
     public String manage() { return "manage";}
@@ -78,7 +93,7 @@ public class WebController {
                              @RequestParam(value = "category") long category,
                              @RequestParam(value = "desc") String description, Model model){
         long category_id = categoryRepository.findById(category).get().getId();
-        itemRepository.save(new Item(barcode, name, category_id, price, description));
+        itemRepository.save(new Item(barcode, name, categoryRepository.findById(category).get(), price, description));
         model.addAttribute("message", "Add new item successful");
         return new ModelAndView("redirect:/admin");
     }

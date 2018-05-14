@@ -46,7 +46,7 @@
 	</div>
 	<!-- Search Item-->
 	<div class="w3-container" id="searchForm" style="margin-left:100px">
-		<form action="">
+		<form action="/admin/search">
 			<div class="w3-section">
 				<input class="w3-input w3-border" type="text" id="search" name="search" placeholder="Search Product" required="" autocomplete="off" autofocus>
 			</div>
@@ -72,9 +72,9 @@
 				<td th:text="${item.name}" style="word-wrap: break-word">
 					Test
 				</td>
-				<td th:text="${item.category}" style="word-wrap: break-word">
+				<td th:text="${item.category.name}" style="word-wrap: break-word">
 					Test
-				</td> <!-- kalo bisa yang ditampilin bukan category_id -->
+				</td>
 				<td th:text="${item.price}" style="word-wrap: break-word">
 					Test
 				</td>

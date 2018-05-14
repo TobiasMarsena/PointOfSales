@@ -1,5 +1,7 @@
 package com.rks.project.pointofsales.item;
 
+import com.rks.project.pointofsales.category.Category;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -18,17 +20,17 @@ public class Item implements Serializable{
     @NotNull
     private String name;
     @NotNull
-    private long category_id;
+    private Category category;
     @NotNull
     private long price;
     private String description;
 
     protected Item() {}
 
-    public Item(@NotNull int code, @NotNull String name, @NotNull long category_id, @NotNull long price, String description) {
+    public Item(@NotNull int code, @NotNull String name, @NotNull Category category, @NotNull long price, String description) {
         this.code = code;
         this.name = name;
-        this.category_id = category_id;
+        this.category = category;
         this.price = price;
         this.description = description;
     }
@@ -47,11 +49,11 @@ public class Item implements Serializable{
         this.name = name;
     }
 
-    public long getCategory_id() {
-        return category_id;
+    public Category getCategory() {
+        return category;
     }
-    public void setCategory_id(long category_id) {
-        this.category_id = category_id;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public long getPrice() {
@@ -73,7 +75,7 @@ public class Item implements Serializable{
         return "item{" +
                 "code=" + code +
                 ", name='" + name + '\'' +
-                ", category_id=" + category_id +
+                ", category=" + category +
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 '}';
