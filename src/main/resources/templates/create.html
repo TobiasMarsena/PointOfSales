@@ -22,9 +22,9 @@ body {font-size:16px;}
 	Name</b></h3>
 </div>
 <div class="w3-bar-block">
-	<a href="/search" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Search</a>
-	<a href="/item" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Create New Item</a>
-	<a href="/manage" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Manage</a>
+	<a href="/admin/search" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Search</a>
+	<a href="/admin/item" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Create New Item</a>
+	<a href="/admin/manage" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Manage</a>
 	<a href="/logout" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Logout</a>
 </div>
 </nav>
@@ -51,7 +51,7 @@ body {font-size:16px;}
 	</table>
 	<!-- Create New item-->
 	<div class="w3-container" id="create" style="margin-left:100px">
-		<form th:object="${item}" action="/item/create" method="post">
+		<form th:object="${item}" action="/admin/item/create" method="post">
 			<div class="w3-section">
 				<input class="w3-input w3-border" type="number" id="barcode" name="barcode" placeholder="Barcode" required="" autocomplete="off" autofocus>
 			</div>
