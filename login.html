@@ -1,0 +1,49 @@
+<!--A Design by W3layouts 
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<title>LOGIN - Company Name</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Official Signup Form Responsive, Login form web template,Flat Pricing tables,Flat Drop downs  Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- fonts -->
+<link href="//fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+<!-- /fonts -->
+<!-- css -->
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/style.css" rel='stylesheet' type='text/css' media="all" />
+<!-- /css -->
+</head>
+<body>
+<h1 class="w3ls">Company Name</h1>
+<div class="content-w3ls">
+	<div class="content-agile1">
+		<h2 class="agileits1">Login</h2>
+		<p class="agileits2">Go Shopping! It Will Never Hurt You!</p>
+	</div>
+	<div class="content-agile2">
+		<form action="login" method="post">
+			<div class="form-control w3layouts">	
+				<input type="text" id="username" name="username" placeholder="Username" title="Please enter a username" autocomplete="off" required="">
+			</div>
+
+			<div class="form-control agileinfo">	
+				<input type="password" class="lock" name="password" placeholder="Password" id="password1" required="">
+			</div>
+			<div th:if="${param.error}">
+				Invalid username and password.
+			</div>
+			<input type="submit" class="register" value="Sign In">
+		</form>
+			</div>
+	<div class="clear"></div>
+</div>
+</body>
+</html>
