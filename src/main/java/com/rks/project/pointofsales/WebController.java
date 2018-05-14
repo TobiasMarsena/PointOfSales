@@ -75,8 +75,18 @@ public class WebController {
         return "search";
     }
 
-    @RequestMapping(path = "/admin/manage")
-    public String manage() { return "manage";}
+    @GetMapping(path = "/admin/manage")
+    public String manage(@RequestParam(value = "search", required = false) String search,
+                         Model model) {
+        if (search != null) {
+            Optional<Item> items = itemRepository.findByName(search);
+            if (items.isPresent()) {
+                model.addAttribute("items", items.get());
+            }
+        } else {
+            List<Item> items = itemRepository.findAll();
+            model.addAttribute("items", items);
+        }return "manage";}
 
     @RequestMapping(path = "/logout")
     public String logout() { return "login";}
@@ -92,7 +102,6 @@ public class WebController {
                              @RequestParam(value = "price") long price,
                              @RequestParam(value = "category") long category,
                              @RequestParam(value = "desc") String description, Model model){
-        long category_id = categoryRepository.findById(category).get().getId();
         itemRepository.save(new Item(barcode, name, categoryRepository.findById(category).get(), price, description));
         model.addAttribute("message", "Add new item successful");
         return new ModelAndView("redirect:/admin");
