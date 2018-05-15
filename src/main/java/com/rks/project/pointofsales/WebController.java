@@ -94,10 +94,19 @@ public class WebController {
         }return "manage";}
 
      @GetMapping(path = "/admin/manage/update/{id}")
-     public ModelAndView update(@PathVariable("id") Long id, Model model) {
+     public String update(@PathVariable("id") Long id, Model model) {
         model.addAttribute("item", itemRepository.findById(id));
-        return new ModelAndView("edit_item");
+        return "edit_item";
      }
+    @GetMapping(path = "/admin/manage/delete/{id}")
+    public String delete(@PathVariable("id") Long id, Model model) {
+        Item item = itemRepository.findById(id).get();
+        itemRepository.delete(item);
+        model.addAttribute("message", item.getName() + " has been deleted");
+        List<Item> items = itemRepository.findAll();
+        model.addAttribute("items", items);
+        return "manage";
+    }
 
     @RequestMapping(path = "/logout")
     public String logout() { return "login";}

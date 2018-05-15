@@ -53,6 +53,11 @@
 					<input class="w3-input w3-border" type="text" id="search" name="search" placeholder="Search Product" required="" autocomplete="off" />
 				</div>
 				<button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom">Search</button>
+				<table>
+					<tr>
+						<td th:text="${message}"/>
+					</tr>
+				</table>
 			</form>
 			<div class="w3-padding-16">
 			</div>
@@ -85,9 +90,9 @@
 					<td style="text-align: center"><a th:href="@{'/admin/manage/update/' + ${item.code}}" >
 						Edit
 					</a></td>
-					<a href="#"><td style="text-align: center">
-					Delete
-					</td></a>
+					<td style="text-align: center"><a th:href="@{'/admin/manage/delete/' + ${item.code}}">
+						Delete
+					</a></td>
 				</tr>
 			</table>
 		</form>
