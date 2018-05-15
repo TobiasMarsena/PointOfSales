@@ -92,10 +92,22 @@ public class WebController {
             List<Item> items = itemRepository.findAll();
             model.addAttribute("items", items);
         }return "manage";}
+    @PostMapping(path = "/admin/manage/updated")
+    public String updateSuccess(@RequestParam(value = "barcode") long barcode,
+                                @RequestParam(value = "item_name") String name,
+                                @RequestParam(value = "price") long price,
+                                @RequestParam(value = "category") long category_id,
+                                @RequestParam(value = "desc") String description, Model model) {
+        Category category = categoryRepository.findById(category_id).get();
+        itemRepository.save(new Item(barcode, name, category, price, description));
+        model.addAttribute("message", "Update success");
+        return "manage";
+    }
 
      @GetMapping(path = "/admin/manage/update/{id}")
      public String update(@PathVariable("id") Long id, Model model) {
         model.addAttribute("item", itemRepository.findById(id));
+        model.addAttribute("categories", categoryRepository.findAll());
         return "edit_item";
      }
     @GetMapping(path = "/admin/manage/delete/{id}")

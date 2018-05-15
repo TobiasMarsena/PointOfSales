@@ -44,16 +44,11 @@ body {font-size:16px;}
 		<h1 class="w3-xxxlarge w3-text-red"><b>Edit Item</b></h1>
 		<hr style="width:50px;border:5px solid red" class="w3-round">
 	</div>
-	<table>
-		<tr>
-			<td th:text="${message}"/>
-		</tr>
-	</table>
 	<!-- Create New item-->
 	<div class="w3-container" id="create" style="margin-left:100px">
 		<form th:object="${item}" action="#" method="post">
 			<div class="w3-section">
-				<input th:field="*{code}" class="w3-input w3-border" type="number" id="barcode" name="barcode" placeholder="Barcode" required="" autocomplete="off" autofocus>
+				<input th:field="*{code}" class="w3-input w3-border" type="number" id="barcode" name="barcode" placeholder="Barcode" required="" autocomplete="off" autofocus readonly>
 			</div>
 			<div class="w3-section">
 				<input th:field="*{name}" class="w3-input w3-border" type="text" id="item_name" name="item_name" required="" placeholder="Item Name" autocomplete="off">
