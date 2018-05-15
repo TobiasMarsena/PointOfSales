@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class Item implements Serializable{
     @Id
     @NotNull
-    private int code;
+    private Long code;
     @NotNull
     private String name;
     @NotNull
@@ -27,7 +27,7 @@ public class Item implements Serializable{
 
     protected Item() {}
 
-    public Item(@NotNull int code, @NotNull String name, @NotNull Category category, @NotNull long price, String description) {
+    public Item(@NotNull Long code, @NotNull String name, @NotNull Category category, @NotNull long price, String description) {
         this.code = code;
         this.name = name;
         this.category = category;
@@ -35,10 +35,10 @@ public class Item implements Serializable{
         this.description = description;
     }
 
-    public int getCode() {
+    public Long getCode() {
         return code;
     }
-    public void setCode(int code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 

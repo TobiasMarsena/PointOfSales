@@ -73,21 +73,21 @@
 					</th>
 				</tr>
 				<tr th:each="item : ${items}">
-					<td th:text="${item.name}" style="word-wrap: break-word">
+					<td th:text="${item.name}" style="word-wrap: break-word; text-align: center">
 						Test
 					</td>
-					<td th:text="${item.category.name}" style="word-wrap: break-word">
+					<td th:text="${item.category.name}" style="word-wrap: break-word; text-align: center">
 						Test
 					</td>
-					<td th:text="${item.price}" style="word-wrap: break-word">
+					<td th:text="${item.price}" style="word-wrap: break-word; text-align: center">
 						Test
 					</td>
-					<td style="text-align: center">
+					<td style="text-align: center"><a th:href="@{'/admin/manage/update/' + ${item.code}}" >
 						Edit
-					</td>
-					<td style="text-align: center">
-						Delete
-					</td>
+					</a></td>
+					<a href="#"><td style="text-align: center">
+					Delete
+					</td></a>
 				</tr>
 			</table>
 		</form>

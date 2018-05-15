@@ -1,8 +1,11 @@
 package com.rks.project.pointofsales.item;
 
+import com.rks.project.pointofsales.category.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.*;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -12,5 +15,6 @@ import java.util.Optional;
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Optional<Item> findByName(String name);
+    List<Item> findByCategory(Category category);
 
 }

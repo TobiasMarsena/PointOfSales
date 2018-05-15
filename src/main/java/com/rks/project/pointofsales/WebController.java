@@ -10,12 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,13 +62,20 @@ public class WebController {
     public String searchResult(@RequestParam(value = "search", required = false) String search,
                                Model model) {
         if (search != null) {
-            Optional<Item> items = itemRepository.findByName(search);
-            if (items.isPresent()) {
-                model.addAttribute("items", items.get());
+            if (search.equalsIgnoreCase("All")) {
+                List<Item> items = itemRepository.findAll();
+                model.addAttribute("items", items);
+            } else {
+                Optional<Item> itemsByName = itemRepository.findByName(search);
+                Optional<Category> category = categoryRepository.findByName(search);
+                if (itemsByName.isPresent()) {
+                    model.addAttribute("items", itemsByName.get());
+                } else if (category.isPresent()) {
+                    model.addAttribute("items", itemRepository.findByCategory(category.get()));
+                } else {
+                    model.addAttribute("message", "Item doesn't exist");
+                }
             }
-        } else {
-            List<Item> items = itemRepository.findAll();
-            model.addAttribute("items", items);
         }
         return "search";
     }
@@ -88,6 +93,12 @@ public class WebController {
             model.addAttribute("items", items);
         }return "manage";}
 
+     @GetMapping(path = "/admin/manage/update/{id}")
+     public ModelAndView update(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("item", itemRepository.findById(id));
+        return new ModelAndView("edit_item");
+     }
+
     @RequestMapping(path = "/logout")
     public String logout() { return "login";}
 
@@ -97,7 +108,7 @@ public class WebController {
     }
 
     @PostMapping(path = "/admin/item/create")
-    public ModelAndView createItem(@RequestParam(value = "barcode") int barcode,
+    public ModelAndView createItem(@RequestParam(value = "barcode") long barcode,
                              @RequestParam(value = "item_name") String name,
                              @RequestParam(value = "price") long price,
                              @RequestParam(value = "category") long category,

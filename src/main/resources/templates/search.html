@@ -11,6 +11,7 @@
 		body {font-size:16px;}
 		.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
 		.w3-half img:hover{opacity:1}
+		/*#searchTable{display: none}*/
 	</style>
 </head>
 <body>
@@ -51,12 +52,17 @@
 				<input class="w3-input w3-border" type="text" id="search" name="search" placeholder="Search Product" required="" autocomplete="off" autofocus>
 			</div>
 			<button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom" onclick="showResult()">Search</button>
+			<table>
+				<tr>
+					<td th:text="${message}"/>
+				</tr>
+			</table>
 		</form>
 		<div class="w3-padding-16">
 		</div>
-		<table class="w3-table w3-table-all">
-			<!-- id="searchTable" -->
-			<caption>Search Result</caption>
+		<table class="w3-table w3-table-all" >
+			<!--id="searchTable"-->
+		<caption>Search Result</caption>
 			<tr>
 				<th style="text-align: center">
 					Item Name
@@ -69,13 +75,13 @@
 				</th>
 			</tr>
 			<tr th:each="item : ${items}">
-				<td th:text="${item.name}" style="word-wrap: break-word">
+				<td th:text="${item.name}" style="word-wrap: break-word; text-align: center">
 					Test
 				</td>
-				<td th:text="${item.category.name}" style="word-wrap: break-word">
+				<td th:text="${item.category.name}" style="word-wrap: break-word; text-align: center">
 					Test
 				</td>
-				<td th:text="${item.price}" style="word-wrap: break-word">
+				<td th:text="${item.price}" style="word-wrap: break-word; text-align: center">
 					Test
 				</td>
 			</tr>
@@ -93,14 +99,15 @@
 		document.getElementById("mySidebar").style.display = "none";
 		document.getElementById("myOverlay").style.display = "none";
 	}
-	<!-- function showResult(){
-	var x = document.getElementById("searchTable");
-	if (x.style.display === "none"){
-		x.style.display = "table";
-	}
-	else {
-		x.style.display = "none":
-	} -->
+	// function showResult(){
+	// var x = document.getElementById("searchTable");
+	// if (x.style.display === "none"){
+	// 	x.style.display = "block";
+	// }
+	// else {
+	// 	x.style.display = "none";
+	// }
+	// }
 </script>
 </body>
 </html>
