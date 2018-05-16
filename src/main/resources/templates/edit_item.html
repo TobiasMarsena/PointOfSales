@@ -46,26 +46,26 @@ body {font-size:16px;}
 	</div>
 	<!-- Create New item-->
 	<div class="w3-container" id="create" style="margin-left:100px">
-		<form th:object="${item}" action="#" method="post">
+		<form th:object="${item}" action="/admin/manage/updated" method="post">
 			<div class="w3-section">
-				<input th:field="*{code}" class="w3-input w3-border" type="number" id="barcode" name="barcode" placeholder="Barcode" required="" autocomplete="off" autofocus readonly>
+				<input th:field="*{code}" class="w3-input w3-border" type="number" id="code" name="code" placeholder="Barcode" required="" autocomplete="off" autofocus readonly>
 			</div>
 			<div class="w3-section">
-				<input th:field="*{name}" class="w3-input w3-border" type="text" id="item_name" name="item_name" required="" placeholder="Item Name" autocomplete="off">
+				<input th:field="*{name}" class="w3-input w3-border" type="text" id="name" name="name" required="" placeholder="Item Name" autocomplete="off">
 			</div>
 			<div class="w3-section">
 				<input th:field="*{price}" class="w3-input w3-border" type="text" name="price" id="price" required="" placeholder="Price" autocomplete="off">
 			</div>
 			<div class="w3-section">
-				<select class="w3-input w3-dropdown w3-border" id="category" name="category" required="">
-					<option value="">- Select category</option>
+				<select class="w3-input w3-dropdown w3-border" value="${item.category.id}" id="category" name="category" required="">
 					<option th:each="category : ${categories}"
 							th:value="${category.id}"
-							th:text="${category.name}"></option>
+							th:text="${category.name}"
+                            th:selected="(${category.id} == *{category.id})"></option>
 				</select>
 			</div>
 			<div class="w3-section">
-				<input th:field="*{description}" class="w3-input-desc w3-border" id="desc" type="text" name="desc" required="" placeholder="Description" autocomplete="off">
+				<input th:field="*{description}" class="w3-input-desc w3-border" id="description" type="text" name="description" placeholder="Description" autocomplete="off">
 			</div>
 			<button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom">Submit</button>
 		</form>
