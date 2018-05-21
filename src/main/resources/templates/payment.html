@@ -100,7 +100,7 @@
                     <td colspan="4" style="text-align: right">
                         Total | Rp.
                     </td>
-                    <td colspan="2">
+                    <td th:text="${total}"colspan="2">
                         xxx
                     </td>
                 </tr>
@@ -119,14 +119,14 @@
             <!--Displaying dialog box for payment-->
             <!--Cash-->
             <div class="w3-modal w3-modal-content" id="paymentBoxCash">
-                Cash<input class="w3-input w3-border" type="number" id="totalCash" name="totalCash" required="" autocomplete="off" autofocus />
-                Change<input class="w3-input w3-border" type="number" id="totalChange" name="totalChange" required="" autocomplete="off" />
+                Cash<input th:field="*{cash}" class="w3-input w3-border" type="number" id="totalCash" name="totalCash" required="" autocomplete="off" autofocus />
+                Change<input th:text="${change}" class="w3-input w3-border" type="number" id="totalChange" name="totalChange" readonly />
             </div>
 
             <!--Credit/Debit-->
             <div class="w3-modal w3-modal-content" id="paymentBoxCD">
-                Payment<input class="w3-input w3-border" type="number" id="totalCD" name="totalCD" required="" autocomplete="off" autofocus/>
-                Reference Number<input class="w3-input w3-border" type="number" id="referenceNumber" name="referenceNumber" required="" autocomplete="off" />
+                Payment<input th:field="*{payment}" class="w3-input w3-border" type="number" id="totalCD" name="totalCD" required="" autocomplete="off" autofocus/>
+                Reference Number<input th:field="*{referenceNumber}" class="w3-input w3-border" type="number" id="referenceNumber" name="referenceNumber" required="" autocomplete="off" />
             </div>
 
             <div class="w3-padding-small"></div>
