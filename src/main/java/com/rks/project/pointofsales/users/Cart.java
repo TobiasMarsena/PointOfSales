@@ -5,7 +5,7 @@ import com.rks.project.pointofsales.item.Item;
 public class Cart {
     private Item item;
     private int quantity;
-    private long total;
+    private long amount;
 
     public Cart() {
     }
@@ -13,7 +13,7 @@ public class Cart {
     public Cart(Item item) {
         this.item = item;
         this.quantity = 1;
-        this.total = this.item.getPrice();
+        this.amount = this.item.getPrice();
     }
 
     public Item getItem() {
@@ -28,22 +28,22 @@ public class Cart {
     }
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-        this.total = this.item.getPrice() * this.quantity;
+        this.amount = this.item.getPrice() * this.quantity;
     }
     public void incrementQuantity() {
         this.quantity++;
-        this.total = this.item.getPrice() * this.quantity;
+        this.amount = this.item.getPrice() * this.quantity;
     }
     public void decrementQuantity() {
         this.quantity--;
-        this.total = this.item.getPrice() * this.quantity;
+        this.amount = this.item.getPrice() * this.quantity;
     }
 
-    public long getTotal() {
-        return total;
+    public long getAmount() {
+        return amount;
     }
-    public void setTotal(long total) {
-        this.total = total;
+    public void setAmount(long amount) {
+        this.amount = amount;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Cart {
         return "Cart{" +
                 "item=" + item +
                 ", quantity=" + quantity +
-                ", total=" + total +
+                ", amount=" + amount +
                 '}';
     }
 }
