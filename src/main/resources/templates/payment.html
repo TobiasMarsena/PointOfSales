@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/css/w3.css">
 	<link rel="stylesheet" href="/css/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
 		body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
 		body {font-size:16px;}
@@ -68,10 +69,13 @@
 						Item Name
 					</th>
 					<th style="background-color: #3f51b5">
-						Category
+						Quantity
 					</th>
 					<th style="background-color: #3f51b5">
 						Price
+					</th>
+					<th style="background-color: #3f51b5">
+						Total
 					</th>
 					<th colspan="2" style="text-align: center; width:175px; background-color: #3f51b5;">
 						Action
@@ -81,17 +85,20 @@
 					<td th:text="${item.name}" style="word-wrap: break-word">
 						Test
 					</td>
-					<td th:text="${item.category.name}" style="word-wrap: break-word">
+					<td style="word-wrap: break-word">
+						Test
+					</td>
+					<td th:text="${item.price}" style="word-wrap: break-word">
 						Test
 					</td>
 					<td th:text="${item.price}" style="word-wrap: break-word">
 						Test
 					</td>
 					<td><a th:href="@{'/admin/manage/update/' + ${item.code}}" >
-						Edit
+						<i class="fa fa-edit"></i>
 					</a></td>
 					<td><a th:href="@{'/admin/manage/delete/' + ${item.code}}">
-						Delete
+						<i class="fa fa-trash"></i>
 					</a></td>
 				</tr>
 			</table>
@@ -123,7 +130,7 @@
         cell2.innerHTML = "NEW CELL2";
         cell3.innerHTML = "NEW CELL3";
         cell4.innerHTML = "CELL4";
-        cell5.innerHTML = "CELL4";
+        cell5.innerHTML = "CELL5";
     }
 </script>
 </body>
