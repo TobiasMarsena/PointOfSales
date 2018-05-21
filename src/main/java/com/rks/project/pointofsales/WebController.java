@@ -34,7 +34,9 @@ public class WebController {
     CategoryRepository categoryRepository;
     @Autowired
     ItemRepository itemRepository;
-    ArrayList<Cart> carts;
+    ArrayList<Cart> carts = new ArrayList<>();
+    int total;
+
 
     @RequestMapping(path = "/")
     public ModelAndView main(){
@@ -57,24 +59,77 @@ public class WebController {
         return new ModelAndView("redirect:/" + url);
     }
 
-    //    User Controller - DONE
+    //    User Controller
     @GetMapping(path = "/user")
     public String user(@RequestParam(value = "search", required = false) Long searchCode, Model model) {
         if (searchCode != null){
             Optional<Item> item = itemRepository.findById(searchCode);
             if (item.isPresent()){
                 for (Cart cart: carts) {
-                    if (cart.getItem().equals(item.get())){
+                    if (cart.getItem().getCode().equals(item.get().getCode())){
                         model.addAttribute("message", "Item already in cart");
                         model.addAttribute("items", carts);
+                        total = 0;
+                        for (Cart cart1 : carts) {
+                            total += cart1.getAmount();
+                        }
+                        model.addAttribute("total", total);
+                        model.addAttribute("cash", 0);
                         return "payment";
                     }
                 }
                 carts.add(new Cart(item.get()));
                 model.addAttribute("items", carts);
+                total = 0;
+                for (Cart cart : carts) {
+                    total += cart.getAmount();
+                }
+                model.addAttribute("total", total);
+                model.addAttribute("cash", 0);
             } else {
                 model.addAttribute("message", "Item not found");
             }
+        }
+        return "payment";
+    }
+    @PostMapping(path = "/user/purchase")
+    public String purchase(@RequestParam(value = "paymentMethod") String paymentMethod,
+                           @RequestParam(value = "totalCash", required = false) long cash,
+                           @RequestParam(value = "totalCD", required = false) long credit,
+                           @RequestParam(value = "referenceNumber", required = false) long card,
+                           Model model) {
+        if (paymentMethod.equals("Cash")){
+            if (cash >= total) {
+                model.addAttribute("message", "Cash Payment succesful. Thank you");
+            } else {
+                model.addAttribute("items", carts);
+                total = 0;
+                for (Cart cart : carts) {
+                    total += cart.getAmount();
+                }
+                model.addAttribute("total", total);
+                model.addAttribute("cash", cash);
+            }
+        } else if (paymentMethod.equals("Credit") || paymentMethod.equals("Debit")) {
+            if (credit >= total) {
+                model.addAttribute("message", "Payment succesful. Thank you");
+            } else {
+                model.addAttribute("items", carts);
+                total = 0;
+                for (Cart cart : carts) {
+                    total += cart.getAmount();
+                }
+                model.addAttribute("total", total);
+                model.addAttribute("cash", cash);
+            }
+        } else {
+            model.addAttribute("items", carts);
+            total = 0;
+            for (Cart cart : carts) {
+                total += cart.getAmount();
+            }
+            model.addAttribute("total", total);
+            model.addAttribute("message", "Select a payment method");
         }
         return "payment";
     }
@@ -87,9 +142,12 @@ public class WebController {
             }
         }
         model.addAttribute("items", carts);
+        total = 0;
         for (Cart cart : carts) {
-            System.out.println(cart.toString());
+            total += cart.getAmount();
         }
+        model.addAttribute("total", total);
+        model.addAttribute("cash", 0);
         return "payment";
     }
     @GetMapping(path = "/user/subtract/{id}")
@@ -105,6 +163,12 @@ public class WebController {
             }
         }
         model.addAttribute("items", carts);
+        total = 0;
+        for (Cart cart : carts) {
+            total += cart.getAmount();
+        }
+        model.addAttribute("total", total);
+        model.addAttribute("cash", 0);
         return "payment";
     }
 
