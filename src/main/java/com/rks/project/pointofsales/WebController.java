@@ -57,7 +57,7 @@ public class WebController {
         return new ModelAndView("redirect:/" + url);
     }
 
-    //    User Controller
+    //    User Controller - DONE
     @GetMapping(path = "/user")
     public String user(@RequestParam(value = "search", required = false) Long searchCode, Model model) {
         if (searchCode != null){
