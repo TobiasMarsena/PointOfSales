@@ -44,7 +44,7 @@ body {font-size:16px;}
 		<h1 class="w3-xxxlarge w3-text-red"><b>Edit Item</b></h1>
 		<hr style="width:50px;border:5px solid red" class="w3-round">
 	</div>
-	<!-- Create New item-->
+	<!--Edit item-->
 	<div class="w3-container" id="create" style="margin-left:100px">
 		<form th:object="${item}" action="/admin/manage/updated" method="post">
 			<div class="w3-section">
@@ -81,13 +81,6 @@ function w3_open() {
 function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
     document.getElementById("myOverlay").style.display = "none";
-}
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
 }
 // Create New Category
 function createNew(){

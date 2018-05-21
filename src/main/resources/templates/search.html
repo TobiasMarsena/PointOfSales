@@ -51,41 +51,42 @@
 			<div class="w3-section">
 				<input class="w3-input w3-border" type="text" id="search" name="search" placeholder="Search Product" required="" autocomplete="off" autofocus>
 			</div>
-			<button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom" onclick="showResult()">Search</button>
 			<table>
 				<tr>
 					<td th:text="${message}"/>
 				</tr>
 			</table>
 		</form>
+		<button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom">Search</button>
 		<div class="w3-padding-16">
 		</div>
-		<table class="w3-table w3-table-all" >
-			<!--id="searchTable"-->
+		<table class="w3-table w3-table-all" id="searchTable">
 		<caption>Search Result</caption>
 			<tr>
-				<th style="text-align: center">
+				<th>
 					Item Name
 				</th>
-				<th style="text-align: center">
+				<th>
 					Category
 				</th>
-				<th style="text-align: center">
+				<th>
 					Price
 				</th>
 			</tr>
 			<tr th:each="item : ${items}">
-				<td th:text="${item.name}" style="word-wrap: break-word; text-align: center">
+				<td th:text="${item.name}" style="word-wrap: break-word">
 					Test
 				</td>
-				<td th:text="${item.category.name}" style="word-wrap: break-word; text-align: center">
+				<td th:text="${item.category.name}" style="word-wrap: break-word">
 					Test
 				</td>
-				<td th:text="${item.price}" style="word-wrap: break-word; text-align: center">
+				<td th:text="${item.price}" style="word-wrap: break-word">
 					Test
 				</td>
 			</tr>
 		</table>
+		<div class="w3-padding-16">
+		</div>
 	</div>
 	<!-- End page content -->
 </div>
@@ -99,15 +100,10 @@
 		document.getElementById("mySidebar").style.display = "none";
 		document.getElementById("myOverlay").style.display = "none";
 	}
-	// function showResult(){
-	// var x = document.getElementById("searchTable");
-	// if (x.style.display === "none"){
-	// 	x.style.display = "block";
-	// }
-	// else {
-	// 	x.style.display = "none";
-	// }
-	// }
+	// show result on table
+    // function showResult() {
+     //    document.getElementById('searchTable').style.display = "table";
+    // }
 </script>
 </body>
 </html>

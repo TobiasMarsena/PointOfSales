@@ -38,7 +38,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<input type="password" class="lock" name="password" placeholder="Password" id="password1" required="">
 			</div>
 			<div th:if="${param.error}">
-				Invalid username and password.
+				<p>Invalid username and password.</p>
 			</div>
 			<input type="submit" class="register" value="Sign In">
 		</form>

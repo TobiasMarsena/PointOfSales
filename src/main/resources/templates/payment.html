@@ -16,7 +16,7 @@
 </head>
 <body>
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index: 3; width: 300px; font-weight: bold; display: none;" id="mySidebar"><br>
+<nav class="w3-sidebar w3-indigo w3-collapse w3-top w3-large w3-padding" style="z-index: 3; width: 300px; font-weight: bold; display: none;" id="mySidebar"><br>
 	<a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
 	<div class="w3-container">
 		<h3 class="w3-padding-16"><b>Company<br>
@@ -30,8 +30,8 @@
 	</div>
 </nav>
 <!-- Top menu on small screens -->
-<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
-	<a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
+<header class="w3-container w3-top w3-hide-large w3-indigo w3-xlarge w3-padding">
+	<a href="javascript:void(0)" class="w3-button w3-indigo w3-margin-right" onclick="w3_open()">☰</a>
 	<span>Company Name</span>
 </header>
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -41,18 +41,18 @@
 <div class="w3-main" style="margin-left:340px;margin-right:40px">
 	<!-- Header -->
 	<div class="w3-container" style="margin-top:24px" id="showcase">
-		<h1 class="w3-jumbo"><b>Admin Page</b></h1>
-		<h1 class="w3-xxxlarge w3-text-red"><b>Manage</b></h1>
-		<hr style="width:50px;border:5px solid red" class="w3-round">
+		<h1 class="w3-jumbo"><b>Cashier Page</b></h1>
+		<h1 class="w3-xxxlarge w3-text-indigo"><b>Payment</b></h1>
+		<hr style="width:50px;border:5px solid #3f51b5" class="w3-round">
 	</div>
-	<!-- Manage Item-->
-	<div class="w3-container" id="manageForm" style="margin-left:100px">
+	<!--Payment Item-->
+	<div class="w3-container" id="paymentForm" style="margin-left:100px">
 		<form action="">
-			<form action="/admin/manage">
+			<form action="#">
 				<div class="w3-section">
-					<input class="w3-input w3-border" type="text" id="search" name="search" placeholder="Search Product" required="" autocomplete="off" />
+					<input class="w3-input w3-border" type="number" id="search" name="search" placeholder="Input Barcode" required="" autocomplete="off" />
 				</div>
-				<button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom">Search</button>
+				<button type="submit" class="w3-button w3-block w3-padding-large w3-indigo w3-margin-bottom" onclick="autoAddRow()">Add</button>
 				<table>
 					<tr>
 						<td th:text="${message}"/>
@@ -61,19 +61,19 @@
 			</form>
 			<div class="w3-padding-16">
 			</div>
-			<table class="w3-table w3-table-all" id="manageTable">
+			<table class="w3-table w3-table-all" id="paymentTable">
 				<caption>Search Result</caption>
 				<tr>
-					<th>
+					<th style="background-color: #3f51b5">
 						Item Name
 					</th>
-					<th>
+					<th style="background-color: #3f51b5">
 						Category
 					</th>
-					<th>
+					<th style="background-color: #3f51b5">
 						Price
 					</th>
-					<th colspan="2" style="text-align: center; width:175px;">
+					<th colspan="2" style="text-align: center; width:175px; background-color: #3f51b5;">
 						Action
 					</th>
 				</tr>
@@ -111,6 +111,20 @@
 		document.getElementById("mySidebar").style.display = "none";
 		document.getElementById("myOverlay").style.display = "none";
 	}
+	function autoAddRow() {
+		var table = document.getElementById("paymentTable");
+        var row = table.insertRow(1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        cell1.innerHTML = "NEW CELL1";
+        cell2.innerHTML = "NEW CELL2";
+        cell3.innerHTML = "NEW CELL3";
+        cell4.innerHTML = "CELL4";
+        cell5.innerHTML = "CELL4";
+    }
 </script>
 </body>
 </html>

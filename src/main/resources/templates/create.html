@@ -71,7 +71,7 @@ body {font-size:16px;}
 				</select>
 			</div>
 			<div class="w3-section">
-				<input class="w3-input-desc w3-border" id="desc" type="text" name="desc" required="" placeholder="Description" autocomplete="off">
+				<input class="w3-input-desc w3-border" id="desc" type="text" name="desc" placeholder="Description" autocomplete="off">
 			</div>
 			<button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom">Submit</button>
 		</form>
@@ -87,13 +87,6 @@ function w3_open() {
 function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
     document.getElementById("myOverlay").style.display = "none";
-}
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
 }
 // Create New Category
 function createNew(){
