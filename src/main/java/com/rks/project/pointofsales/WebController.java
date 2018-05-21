@@ -61,7 +61,7 @@ public class WebController {
 
     //    User Controller
     @GetMapping(path = "/user")
-    public String user(@RequestParam(value = "search", required = false) Long searchCode, Model model) {
+    public String user(@PathVariable(value = "search",required = false) Long searchCode, Model model) {
         if (searchCode != null){
             Optional<Item> item = itemRepository.findById(searchCode);
             if (item.isPresent()){
@@ -100,7 +100,10 @@ public class WebController {
                            Model model) {
         if (paymentMethod.equals("Cash")){
             if (cash >= total) {
-                model.addAttribute("message", "Cash Payment succesful. Thank you");
+                long change = total - cash;
+                model.addAttribute("message", "Cash Payment succesful with change: " + change + ".\nThank you");
+                carts = new ArrayList<>();
+                total = 0;
             } else {
                 model.addAttribute("items", carts);
                 total = 0;
@@ -113,6 +116,8 @@ public class WebController {
         } else if (paymentMethod.equals("Credit") || paymentMethod.equals("Debit")) {
             if (credit >= total) {
                 model.addAttribute("message", "Payment succesful. Thank you");
+                carts = new ArrayList<>();
+                total = 0;
             } else {
                 model.addAttribute("items", carts);
                 total = 0;

@@ -47,18 +47,17 @@
 	</div>
 	<!--Payment Item-->
 	<div class="w3-container" id="paymentForm" style="margin-left:100px">
-		<form action="/user">
-			<form action="/user/purchase" method="post">
-				<div class="w3-section">
-					<input class="w3-input w3-border" type="number" id="search" name="search" placeholder="Input Barcode" required="" autocomplete="off" />
-				</div>
-				<button type="submit" class="w3-button w3-block w3-padding-large w3-indigo w3-margin-bottom" >Add</button>
-				<table>
-					<tr>
-						<td th:text="${message}"/>
-					</tr>
-				</table>
-			</form>
+		<form action="/user/purchase" method="post">
+			<div class="w3-section">
+				<input class="w3-input w3-border" type="number" id="search" name="search" placeholder="Input Barcode" required="" autocomplete="off" />
+			</div>
+			<a th:href="@{'/user/' + *{search}}">Add</a>
+			<table>
+				<tr>
+					<td th:text="${message}"/>
+				</tr>
+			</table>
+
 			<div class="w3-padding-16">
 			</div>
 			<table class="w3-table w3-table-all" id="paymentTable">
@@ -119,13 +118,13 @@
             <!--Displaying dialog box for payment-->
             <!--Cash-->
             <div class="w3-modal w3-modal-content" id="paymentBoxCash">
-                Cash<input class="w3-input w3-border" type="number" id="totalCash" name="totalCash" required="" autocomplete="off" autofocus />
+                Cash<input th:text="${cash}" class="w3-input w3-border" type="number" id="totalCash" name="totalCash" required="" autocomplete="off" autofocus />
                 Change<input class="w3-input w3-border" type="number" id="totalChange" name="totalChange" readonly />
             </div>
 
             <!--Credit/Debit-->
             <div class="w3-modal w3-modal-content" id="paymentBoxCD">
-                Payment<input class="w3-input w3-border" type="number" id="totalCD" name="totalCD" required="" autocomplete="off" autofocus/>
+                Payment<input th:text="${total}" class="w3-input w3-border" type="number" id="totalCD" name="totalCD" required="" autocomplete="off" autofocus/>
                 Reference Number<input class="w3-input w3-border" type="number" id="referenceNumber" name="referenceNumber" required="" autocomplete="off" />
             </div>
 
