@@ -48,10 +48,10 @@ body {font-size:16px;}
 	<div class="w3-container" id="create" style="margin-left:100px">
 		<form th:object="${item}" action="/admin/manage/updated" method="post">
 			<div class="w3-section">
-				<input th:field="*{code}" class="w3-input w3-border" type="number" id="code" name="code" placeholder="Barcode" required="" autocomplete="off" autofocus readonly>
+				<input th:field="*{code}" class="w3-input w3-border" type="number" id="code" name="code" placeholder="Barcode" readonly>
 			</div>
 			<div class="w3-section">
-				<input th:field="*{name}" class="w3-input w3-border" type="text" id="name" name="name" required="" placeholder="Item Name" autocomplete="off">
+				<input th:field="*{name}" class="w3-input w3-border" type="text" id="name" name="name" required="" placeholder="Item Name" autocomplete="off" autofocus>
 			</div>
 			<div class="w3-section">
 				<input th:field="*{price}" class="w3-input w3-border" type="text" name="price" id="price" required="" placeholder="Price" autocomplete="off">

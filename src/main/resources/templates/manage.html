@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/css/w3.css">
 	<link rel="stylesheet" href="/css/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
 		body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
 		body {font-size:16px;}
@@ -64,16 +65,16 @@
 			<table class="w3-table w3-table-all" id="manageTable">
 				<caption>Search Result</caption>
 				<tr>
-					<th>
+					<th style="width: 300px">
 						Item Name
 					</th>
-					<th>
+					<th style="width: 200px">
 						Category
 					</th>
-					<th>
+					<th style="width: 125px">
 						Price
 					</th>
-					<th colspan="2" style="text-align: center; width:175px;">
+					<th colspan="2" style="text-align: center; width:100px;">
 						Action
 					</th>
 				</tr>
@@ -88,10 +89,10 @@
 						Test
 					</td>
 					<td><a th:href="@{'/admin/manage/update/' + ${item.code}}" >
-						Edit
+						<i class="fa fa-edit"></i>
 					</a></td>
 					<td><a th:href="@{'/admin/manage/delete/' + ${item.code}}">
-						Delete
+						<i class="fa fa-trash"></i>
 					</a></td>
 				</tr>
 			</table>
