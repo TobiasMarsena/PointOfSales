@@ -61,7 +61,7 @@ public class WebController {
 
     //    User Controller
     @GetMapping(path = "/user")
-    public String user(@PathVariable(value = "search",required = false) Long searchCode, Model model) {
+    public String user(@RequestParam(value = "search", required = false) Long searchCode, Model model) {
         if (searchCode != null){
             Optional<Item> item = itemRepository.findById(searchCode);
             if (item.isPresent()){

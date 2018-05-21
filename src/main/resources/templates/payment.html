@@ -13,8 +13,6 @@
 		body {font-size:16px;}
 		.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
 		.w3-half img:hover{opacity:1}
-        #finishButton{
-            display: none;}
 	</style>
 </head>
 <body>
@@ -47,64 +45,65 @@
 	</div>
 	<!--Payment Item-->
 	<div class="w3-container" id="paymentForm" style="margin-left:100px">
-		<form action="/user/purchase" method="post">
+		<form action="/user">
 			<div class="w3-section">
 				<input class="w3-input w3-border" type="number" id="search" name="search" placeholder="Input Barcode" required="" autocomplete="off" />
 			</div>
-			<a th:href="@{'/user/' + *{search}}">Add</a>
+			<button type="submit" class="w3-button w3-block w3-padding-large w3-indigo w3-margin-bottom" >Add</button>
 			<table>
 				<tr>
 					<td th:text="${message}"/>
 				</tr>
 			</table>
-
-			<div class="w3-padding-16">
-			</div>
-			<table class="w3-table w3-table-all" id="paymentTable">
-				<caption>Search Result</caption>
-				<tr>
-					<th style="background-color: #3f51b5">
-						Item Name
-					</th>
-					<th style="background-color: #3f51b5">
-						Quantity
-					</th>
-					<th style="background-color: #3f51b5">
-						Price
-					</th>
-					<th style="background-color: #3f51b5">
-						Total
-					</th>
-					<th colspan="2" style="text-align: center; width:175px; background-color: #3f51b5;">
-						Action
-					</th>
-				</tr>
-				<tr th:each="cart : ${items}">
-					<td th:text="${cart.item.name}" style="word-wrap: break-word">
-					</td>
-					<td th:text="${cart.quantity}" style="word-wrap: break-word">
-					</td>
-					<td th:text="${cart.item.price}" style="word-wrap: break-word">
-					</td>
-					<td th:text="${cart.amount}" style="word-wrap: break-word">
-					</td>
-					<td><a th:href="@{'/user/add/' + ${cart.item.code}}" >
-						<i class="fa fa-plus-square-o"></i>
-					</a></td>
-					<td><a th:href="@{'/user/subtract/' + ${cart.item.code}}">
-						<i class="fa fa-minus-square-o"></i>
-					</a></td>
-				</tr>
-                <tr>
-                    <td colspan="4" style="text-align: right">
-                        Total | Rp.
-                    </td>
-                    <td th:text="${total}"colspan="2">
-                        xxx
-                    </td>
-                </tr>
-			</table>
-            <div class="w3-section">
+		</form>
+		<div class="w3-padding-16">
+		</div>
+		<table class="w3-table w3-table-all" id="paymentTable">
+			<caption>Search Result</caption>
+			<tr>
+				<th style="background-color: #3f51b5">
+					Item Name
+				</th>
+				<th style="background-color: #3f51b5">
+					Quantity
+				</th>
+				<th style="background-color: #3f51b5">
+					Price
+				</th>
+				<th style="background-color: #3f51b5">
+					Total
+				</th>
+				<th colspan="2" style="text-align: center; width:175px; background-color: #3f51b5;">
+					Action
+				</th>
+			</tr>
+			<tr th:each="cart : ${items}">
+				<td th:text="${cart.item.name}" style="word-wrap: break-word">
+				</td>
+				<td th:text="${cart.quantity}" style="word-wrap: break-word">
+				</td>
+				<td th:text="${cart.item.price}" style="word-wrap: break-word">
+				</td>
+				<td th:text="${cart.amount}" style="word-wrap: break-word">
+				</td>
+				<td><a th:href="@{'/user/add/' + ${cart.item.code}}" >
+					<i class="fa fa-plus-square-o"></i>
+				</a></td>
+				<td><a th:href="@{'/user/subtract/' + ${cart.item.code}}">
+					<i class="fa fa-minus-square-o"></i>
+				</a></td>
+			</tr>
+			<tr>
+				<td colspan="4" style="text-align: right">
+					Total | Rp.
+				</td>
+				<td th:text="${total}"colspan="2">
+					xxx
+				</td>
+			</tr>
+		</table>
+		<form action="/user/purchase" method="post">
+			<div class="w3-section">
                 <select class="w3-input w3-dropdown w3-border float-right" id="paymentMethod" name="paymentMethod" required="" onchange="showModal()">
                     <option value="">- Select payment method</option>
                     <option value="cash">Cash</option>
@@ -118,21 +117,18 @@
             <!--Displaying dialog box for payment-->
             <!--Cash-->
             <div class="w3-modal w3-modal-content" id="paymentBoxCash">
-                Cash<input th:text="${cash}" class="w3-input w3-border" type="number" id="totalCash" name="totalCash" required="" autocomplete="off" autofocus />
+                Cash<input class="w3-input w3-border" type="number" id="totalCash" name="totalCash" required="" autocomplete="off" autofocus />
                 Change<input class="w3-input w3-border" type="number" id="totalChange" name="totalChange" readonly />
             </div>
 
             <!--Credit/Debit-->
             <div class="w3-modal w3-modal-content" id="paymentBoxCD">
-                Payment<input th:text="${total}" class="w3-input w3-border" type="number" id="totalCD" name="totalCD" required="" autocomplete="off" autofocus/>
+                Payment<input class="w3-input w3-border" type="number" id="totalCD" name="totalCD" required="" autocomplete="off" autofocus/>
                 Reference Number<input class="w3-input w3-border" type="number" id="referenceNumber" name="referenceNumber" required="" autocomplete="off" />
             </div>
-
             <div class="w3-padding-small"></div>
-
             <!--Button-->
             <button type="submit" class="w3-button w3-block w3-padding-large w3-indigo w3-margin-bottom" id="finishButton">Purchase</button>
-
         </form>
 		<div class="w3-padding-16">
 		</div>
@@ -152,24 +148,20 @@
     function showModal() {
         var modalCash = document.getElementById("paymentBoxCash");
         var modalCD = document.getElementById("paymentBoxCD");
-        var button = document.getElementById("finishButton");
         var method = document.getElementById("paymentMethod").value;
 
         if (method == 'cash') {
             modalCash.style.display = "block";
             modalCD.style.display = "none";
-            button.style.display = "inline";
 
         }
         else if (method == 'debit' || method == 'credit'){
             modalCD.style.display = "block";
             modalCash.style.display = "none";
-            button.style.display = "inline";
         }
         else {
             modalCash.style.display = "none";
             modalCD.style.display = "none";
-            button.style.display = "none";
         }
 
     }
