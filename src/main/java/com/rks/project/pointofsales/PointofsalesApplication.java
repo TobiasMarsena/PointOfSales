@@ -1,8 +1,6 @@
 package com.rks.project.pointofsales;
 
-import com.rks.project.pointofsales.category.Category;
 import com.rks.project.pointofsales.category.CategoryRepository;
-import com.rks.project.pointofsales.item.Item;
 import com.rks.project.pointofsales.item.ItemRepository;
 import com.rks.project.pointofsales.users.Users;
 import com.rks.project.pointofsales.users.UsersRepository;

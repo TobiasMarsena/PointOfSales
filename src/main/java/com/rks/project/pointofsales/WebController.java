@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.websocket.server.PathParam;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,34 +30,42 @@ public class WebController {
     CategoryRepository categoryRepository;
     @Autowired
     ItemRepository itemRepository;
+    ArrayList<Item> cart = new ArrayList<Item>();
 
+//    User Controller
     @RequestMapping(path = "/")
-    public String home() {
-        return "user";
+    public String home(Model model) {
+        return "payment";
     }
 
-    @RequestMapping(path = "/user")
-    public String user() {
-        return "user";
+    @GetMapping(path = "/user")
+    public String user(@RequestParam(value = "search") Long searchCode, Model model) {
+        Optional<Item> item = itemRepository.findById(searchCode);
+        if (item.isPresent()){
+            cart.add(item.get());
+            model.addAttribute("items", cart);
+        } else {
+            model.addAttribute("message", "Item not found");
+        }
+        return "payment";
     }
 
+//    DONE
+//    Admin Controller
     @RequestMapping(path = "/admin")
     public String admin(Model model) {
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
         return "create";
     }
-
     @RequestMapping(path = "/admin/item")
     public String item(Model model) {
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
         return "create";
     }
-
     @RequestMapping(path = "/admin/category")
     public String category() { return "create_category";}
-
     @GetMapping(path = "/admin/search")
     public String searchResult(@RequestParam(value = "search", required = false) String search,
                                Model model) {
@@ -79,7 +87,6 @@ public class WebController {
         }
         return "search";
     }
-
     @GetMapping(path = "/admin/manage")
     public String manage(@RequestParam(value = "search", required = false) String search,
                          Model model) {
@@ -103,7 +110,6 @@ public class WebController {
         model.addAttribute("message", "Update success");
         return "manage";
     }
-
      @GetMapping(path = "/admin/manage/update/{id}")
      public String update(@PathVariable("id") Long id, Model model) {
         model.addAttribute("item", itemRepository.findById(id).get());
@@ -119,15 +125,12 @@ public class WebController {
         model.addAttribute("items", items);
         return "manage";
     }
-
     @RequestMapping(path = "/logout")
     public String logout() { return "login";}
-
     @GetMapping(path = "/login")
     public String login() {
         return "login";
     }
-
     @PostMapping(path = "/admin/item/create")
     public ModelAndView createItem(@RequestParam(value = "barcode") long barcode,
                              @RequestParam(value = "item_name") String name,
@@ -138,7 +141,6 @@ public class WebController {
         model.addAttribute("message", "Add new item successful");
         return new ModelAndView("redirect:/admin");
     }
-
     @PostMapping(path = "/admin/category/create")
     public ModelAndView createCategory(@RequestParam(value = "new_category") String newCategory, Model model){
         Optional<Category> category = categoryRepository.findByName(newCategory);

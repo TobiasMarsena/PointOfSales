@@ -1,11 +1,9 @@
 package com.rks.project.pointofsales;
 
+import com.rks.project.pointofsales.users.Users;
 import com.rks.project.pointofsales.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.WebSecurityEnablerConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import java.util.List;
 
 /**
  * Created by ASUS on 14/05/2018.
@@ -40,18 +40,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername(usersRepository.findByUsername("Rosa").get().getUsername())
-                .password(encoder.encode(usersRepository.findByUsername("Rosa").get().getPassword()))
-                .roles(usersRepository.findByUsername("Rosa").get().getRole())
-                .build());
-        manager.createUser(User.withUsername(usersRepository.findByUsername("Tobias").get().getUsername())
-                .password(encoder.encode(usersRepository.findByUsername("Tobias").get().getPassword()))
-                .roles(usersRepository.findByUsername("Tobias").get().getRole())
-                .build());
-        manager.createUser(User.withUsername(usersRepository.findByUsername("William").get().getUsername())
-                .password(encoder.encode(usersRepository.findByUsername("William").get().getPassword()))
-                .roles(usersRepository.findByUsername("William").get().getRole())
-                .build());
+        List<Users> usersList = usersRepository.findAll();
+        for (Users user : usersList) {
+            manager.createUser(User.withUsername(user.getUsername())
+                    .password(encoder.encode(user.getPassword()))
+                    .roles(user.getRole())
+                    .build());
+        }
         return manager;
     }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0079)https://www.w3schools.com/w3css/tryw3css_templates_interior_design.htm#showcase -->
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Admin Page</title>
@@ -24,9 +24,8 @@
 			Name</b></h3>
 	</div>
 	<div class="w3-bar-block">
-		<a href="/admin/search" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Search</a>
-		<a href="/admin/item" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Create New Item</a>
-		<a href="/admin/manage" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Manage</a>
+		<div sec:authorize="hasRole('Admin')">
+		<a href="/admin" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Go to Admin Page</a></div>
 		<a href="/logout" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Logout</a>
 	</div>
 </nav>
@@ -48,12 +47,12 @@
 	</div>
 	<!--Payment Item-->
 	<div class="w3-container" id="paymentForm" style="margin-left:100px">
-		<form action="">
-			<form action="#">
+		<form action="/user">
+			<form action="/user">
 				<div class="w3-section">
 					<input class="w3-input w3-border" type="number" id="search" name="search" placeholder="Input Barcode" required="" autocomplete="off" />
 				</div>
-				<button type="submit" class="w3-button w3-block w3-padding-large w3-indigo w3-margin-bottom" onclick="autoAddRow()">Add</button>
+				<button type="submit" class="w3-button w3-block w3-padding-large w3-indigo w3-margin-bottom" >Add</button>
 				<table>
 					<tr>
 						<td th:text="${message}"/>
@@ -83,16 +82,12 @@
 				</tr>
 				<tr th:each="item : ${items}">
 					<td th:text="${item.name}" style="word-wrap: break-word">
-						Test
 					</td>
 					<td style="word-wrap: break-word">
-						Test
 					</td>
 					<td th:text="${item.price}" style="word-wrap: break-word">
-						Test
 					</td>
 					<td th:text="${item.price}" style="word-wrap: break-word">
-						Test
 					</td>
 					<td><a th:href="@{'/admin/manage/update/' + ${item.code}}" >
 						<i class="fa fa-edit"></i>
@@ -118,20 +113,20 @@
 		document.getElementById("mySidebar").style.display = "none";
 		document.getElementById("myOverlay").style.display = "none";
 	}
-	function autoAddRow() {
-		var table = document.getElementById("paymentTable");
-        var row = table.insertRow(1);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
-        cell1.innerHTML = "NEW CELL1";
-        cell2.innerHTML = "NEW CELL2";
-        cell3.innerHTML = "NEW CELL3";
-        cell4.innerHTML = "CELL4";
-        cell5.innerHTML = "CELL5";
-    }
+	<!--function autoAddRow() {-->
+		<!--var table = document.getElementById("paymentTable");-->
+        <!--var row = table.insertRow(1);-->
+        <!--var cell1 = row.insertCell(0);-->
+        <!--var cell2 = row.insertCell(1);-->
+        <!--var cell3 = row.insertCell(2);-->
+        <!--var cell4 = row.insertCell(3);-->
+        <!--var cell5 = row.insertCell(4);-->
+        <!--cell1.innerHTML = "NEW CELL1";-->
+        <!--cell2.innerHTML = "NEW CELL2";-->
+        <!--cell3.innerHTML = "NEW CELL3";-->
+        <!--cell4.innerHTML = "CELL4";-->
+        <!--cell5.innerHTML = "CELL5";-->
+    <!--}-->
 </script>
 </body>
 </html>
