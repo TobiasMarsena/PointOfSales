@@ -238,10 +238,9 @@ a {
 	color: white;
 }
 
-#paymentMethod {
+#paymentMethod, #finishButton {
 	float: right;
 	margin-right: 85px;
-    padding: 10px;
 }
 
 .w3-table th:first-child,.w3-table td:first-child,.w3-table-all th:first-child,.w3-table-all td:first-child {
@@ -410,6 +409,7 @@ a {
 	background-color:rgba(0,0,0,0.4)
 }
 .w3-modal-content {
+    display: none;
 	margin:auto;
 	background-color:#fff;
 	position:relative;
