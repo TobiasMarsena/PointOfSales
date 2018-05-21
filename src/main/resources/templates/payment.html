@@ -24,8 +24,6 @@
 			Name</b></h3>
 	</div>
 	<div class="w3-bar-block">
-		<div sec:authorize="hasRole('Admin')">
-		<a href="/admin" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Go to Admin Page</a></div>
 		<a href="/logout" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Logout</a>
 	</div>
 </nav>
@@ -80,19 +78,19 @@
 						Action
 					</th>
 				</tr>
-				<tr th:each="item : ${items}">
-					<td th:text="${item.name}" style="word-wrap: break-word">
+				<tr th:each="cart : ${items}">
+					<td th:text="${cart.item.name}" style="word-wrap: break-word">
 					</td>
-					<td style="word-wrap: break-word">
+					<td th:text="${cart.quantity}" style="word-wrap: break-word">
 					</td>
-					<td th:text="${item.price}" style="word-wrap: break-word">
+					<td th:text="${cart.item.price}" style="word-wrap: break-word">
 					</td>
-					<td th:text="${item.price}" style="word-wrap: break-word">
+					<td th:text="${cart.total}" style="word-wrap: break-word">
 					</td>
-					<td><a th:href="@{'/admin/manage/update/' + ${item.code}}" >
+					<td><a th:href="@{'/user/add/' + ${cart.item.code}}" >
 						<i class="fa fa-edit"></i>
 					</a></td>
-					<td><a th:href="@{'/admin/manage/delete/' + ${item.code}}">
+					<td><a th:href="@{'/user/subtract/' + ${cart.item.code}}">
 						<i class="fa fa-trash"></i>
 					</a></td>
 				</tr>

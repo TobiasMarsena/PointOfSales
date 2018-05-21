@@ -4,19 +4,18 @@ import com.rks.project.pointofsales.category.Category;
 import com.rks.project.pointofsales.category.CategoryRepository;
 import com.rks.project.pointofsales.item.Item;
 import com.rks.project.pointofsales.item.ItemRepository;
+import com.rks.project.pointofsales.users.Cart;
 import com.rks.project.pointofsales.users.UsersRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -35,13 +34,12 @@ public class WebController {
     CategoryRepository categoryRepository;
     @Autowired
     ItemRepository itemRepository;
-    ArrayList<Item> cart = new ArrayList<Item>();
+    ArrayList<Cart> carts;
 
     @RequestMapping(path = "/")
     public ModelAndView main(){
         return new ModelAndView("redirect:/home");
     }
-//    User Controller
     @RequestMapping(path = "/home")
     public ModelAndView home(Authentication authentication, Model model) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -52,23 +50,61 @@ public class WebController {
                 break;
             } else if (authority.getAuthority().equals("ROLE_User")){
                 url = "user";
+                carts = new ArrayList<>();
                 break;
             }
         }
         return new ModelAndView("redirect:/" + url);
     }
 
+    //    User Controller
     @GetMapping(path = "/user")
     public String user(@RequestParam(value = "search", required = false) Long searchCode, Model model) {
         if (searchCode != null){
             Optional<Item> item = itemRepository.findById(searchCode);
             if (item.isPresent()){
-                cart.add(item.get());
-                model.addAttribute("items", cart);
+                for (Cart cart: carts) {
+                    if (cart.getItem().equals(item.get())){
+                        model.addAttribute("message", "Item already in cart");
+                        model.addAttribute("items", carts);
+                        return "payment";
+                    }
+                }
+                carts.add(new Cart(item.get()));
+                model.addAttribute("items", carts);
             } else {
                 model.addAttribute("message", "Item not found");
             }
         }
+        return "payment";
+    }
+    @GetMapping(path = "/user/add/{id}")
+    public String add(@PathVariable("id") Long id, Model model){
+        for (Cart cart : carts) {
+            if (cart.getItem().getCode().equals(id)){
+                cart.incrementQuantity();
+                break;
+            }
+        }
+        model.addAttribute("items", carts);
+        for (Cart cart : carts) {
+            System.out.println(cart.toString());
+        }
+        return "payment";
+    }
+    @GetMapping(path = "/user/subtract/{id}")
+    public String subtract(@PathVariable("id") Long id, Model model){
+        for (Cart cart : carts) {
+            if (cart.getItem().getCode().equals(id)){
+                if (cart.getQuantity() > 1) {
+                    cart.decrementQuantity();
+                } else {
+                    carts.remove(cart);
+                }
+                break;
+            }
+        }
+        model.addAttribute("items", carts);
         return "payment";
     }
 
