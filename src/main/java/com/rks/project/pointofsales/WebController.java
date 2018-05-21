@@ -8,12 +8,17 @@ import com.rks.project.pointofsales.users.UsersRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,20 +37,37 @@ public class WebController {
     ItemRepository itemRepository;
     ArrayList<Item> cart = new ArrayList<Item>();
 
-//    User Controller
     @RequestMapping(path = "/")
-    public String home(Model model) {
-        return "payment";
+    public ModelAndView main(){
+        return new ModelAndView("redirect:/home");
+    }
+//    User Controller
+    @RequestMapping(path = "/home")
+    public ModelAndView home(Authentication authentication, Model model) {
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        String url = "";
+        for (GrantedAuthority authority : authorities) {
+            if (authority.getAuthority().equals("ROLE_Admin")){
+                url = "admin";
+                break;
+            } else if (authority.getAuthority().equals("ROLE_User")){
+                url = "user";
+                break;
+            }
+        }
+        return new ModelAndView("redirect:/" + url);
     }
 
     @GetMapping(path = "/user")
-    public String user(@RequestParam(value = "search") Long searchCode, Model model) {
-        Optional<Item> item = itemRepository.findById(searchCode);
-        if (item.isPresent()){
-            cart.add(item.get());
-            model.addAttribute("items", cart);
-        } else {
-            model.addAttribute("message", "Item not found");
+    public String user(@RequestParam(value = "search", required = false) Long searchCode, Model model) {
+        if (searchCode != null){
+            Optional<Item> item = itemRepository.findById(searchCode);
+            if (item.isPresent()){
+                cart.add(item.get());
+                model.addAttribute("items", cart);
+            } else {
+                model.addAttribute("message", "Item not found");
+            }
         }
         return "payment";
     }
