@@ -118,9 +118,9 @@
             <!--Cash-->
             <div class="w3-modal-content" id="paymentBoxCash">
                 <br>
-				<input class="w3-input w3-border" type="number" id="totalCash" name="totalCash" placeholder="Cash" autocomplete="off" autofocus style="margin-left: 302px"/>
-				<br>
-                <input class="w3-input w3-border" type="number" id="totalChange" name="totalChange" placeholder="Change" readonly style="margin-left: 302px"/>
+				<input class="w3-input w3-border" type="number" id="totalCash" name="totalCash" placeholder="Cash" autocomplete="off" autofocus style="margin-left: 302px" onblur="change()"/>
+				<p style="margin-left: 302px">Change</p>
+                <input class="w3-input w3-border" th:value="${change}" type="number" id="totalChange" name="totalChange" readonly style="display: none; margin-left: 302px"/>
             </div>
 
             <!--Credit/Debit-->
@@ -166,6 +166,15 @@
             modalCash.style.display = "none";
             modalCD.style.display = "none";
         }
+
+    }
+    function change() {
+	    var cash = document.getElementById("totalCash").value;
+	    var change = document.getElementById("totalChange");
+
+	    if (cash != null){
+	        change.style.display = "block";
+		}
 
     }
 </script>
