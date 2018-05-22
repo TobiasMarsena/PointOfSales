@@ -130,7 +130,10 @@ public class WebController {
                 for (Cart cart : carts) {
                     quantity += cart.getQuantity();
                 }
-                reportRepository.save(new Report(authentication.getName(), quantity, paymentMethod, total));
+                reportRepository.save(new Report(authentication.getName(),
+                        quantity,
+                        paymentMethod + " (" + card + ')',
+                        total));
                 model.addAttribute("message", "Payment using card succesful. Thank you");
                 carts = new ArrayList<>();
                 total = 0;
