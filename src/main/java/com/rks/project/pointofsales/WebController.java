@@ -4,6 +4,8 @@ import com.rks.project.pointofsales.category.Category;
 import com.rks.project.pointofsales.category.CategoryRepository;
 import com.rks.project.pointofsales.item.Item;
 import com.rks.project.pointofsales.item.ItemRepository;
+import com.rks.project.pointofsales.report.Report;
+import com.rks.project.pointofsales.report.ReportRepository;
 import com.rks.project.pointofsales.users.Cart;
 import com.rks.project.pointofsales.users.UsersRepository;
 import org.slf4j.Logger;
@@ -34,6 +36,8 @@ public class WebController {
     CategoryRepository categoryRepository;
     @Autowired
     ItemRepository itemRepository;
+    @Autowired
+    ReportRepository reportRepository;
     ArrayList<Cart> carts = new ArrayList<>();
     int total;
 
@@ -79,28 +83,34 @@ public class WebController {
                     }
                 }
                 carts.add(new Cart(item.get()));
-                model.addAttribute("items", carts);
-                total = 0;
-                for (Cart cart : carts) {
-                    total += cart.getAmount();
-                }
-                model.addAttribute("total", total);
-                model.addAttribute("cash", 0);
             } else {
                 model.addAttribute("message", "Item not found");
             }
         }
+        model.addAttribute("items", carts);
+        total = 0;
+        for (Cart cart : carts) {
+            total += cart.getAmount();
+        }
+        model.addAttribute("total", total);
+        model.addAttribute("cash", 0);
         return "payment";
     }
     @PostMapping(path = "/user/purchase")
     public String purchase(@RequestParam(value = "paymentMethod") String paymentMethod,
-                           @RequestParam(value = "totalCash", required = false) long cash,
-                           @RequestParam(value = "totalCD", required = false) long credit,
-                           @RequestParam(value = "referenceNumber", required = false) long card,
+                           @RequestParam(value = "totalCash", required = false) String cash,
+                           @RequestParam(value = "totalCD", required = false) String credit,
+                           @RequestParam(value = "referenceNumber", required = false) String card,
+                           Authentication authentication,
                            Model model) {
-        if (paymentMethod.equals("Cash")){
-            if (cash >= total) {
-                long change = total - cash;
+        if (paymentMethod.equals("cash")){
+            if (Long.parseLong(cash) >= total) {
+                long change = Long.parseLong(cash) - total;
+                int quantity = 0;
+                for (Cart cart : carts) {
+                    quantity += cart.getQuantity();
+                }
+                reportRepository.save(new Report(authentication.getName(), quantity, paymentMethod, total));
                 model.addAttribute("message", "Cash Payment succesful with change: " + change + ".\nThank you");
                 carts = new ArrayList<>();
                 total = 0;
@@ -112,10 +122,16 @@ public class WebController {
                 }
                 model.addAttribute("total", total);
                 model.addAttribute("cash", cash);
+                model.addAttribute("message", "Insufficient funds");
             }
-        } else if (paymentMethod.equals("Credit") || paymentMethod.equals("Debit")) {
-            if (credit >= total) {
-                model.addAttribute("message", "Payment succesful. Thank you");
+        } else if (paymentMethod.equals("credit") || paymentMethod.equals("debit")) {
+            if (Long.parseLong(credit) >= total) {
+                int quantity = 0;
+                for (Cart cart : carts) {
+                    quantity += cart.getQuantity();
+                }
+                reportRepository.save(new Report(authentication.getName(), quantity, paymentMethod, total));
+                model.addAttribute("message", "Payment using card succesful. Thank you");
                 carts = new ArrayList<>();
                 total = 0;
             } else {
@@ -126,6 +142,7 @@ public class WebController {
                 }
                 model.addAttribute("total", total);
                 model.addAttribute("cash", cash);
+                model.addAttribute("message", "Insufficient funds");
             }
         } else {
             model.addAttribute("items", carts);
