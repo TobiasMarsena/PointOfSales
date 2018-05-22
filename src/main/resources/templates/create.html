@@ -67,7 +67,7 @@ body {font-size:16px;}
 					<option th:each="category : ${categories}"
 							th:value="${category.id}"
 							th:text="${category.name}"></option>
-					<option value="/category" >Create New Category</option>
+					<option value="/admin/category" >Create New Category</option>
 				</select>
 			</div>
 			<div class="w3-section">
@@ -91,7 +91,7 @@ function w3_close() {
 // Create New Category
 function createNew(){
 	var url = document.getElementById('category').value;
-        if(url == '/category') {
+        if(url == '/admin/category') {
             window.location = url;
         }
 }

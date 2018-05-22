@@ -58,7 +58,8 @@
 		</form>
 		<div class="w3-padding-16">
 		</div>
-		<table class="w3-table w3-table-all" id="paymentTable">
+        <form name="form_2" action="/user/purchase" method="post">
+        <table class="w3-table w3-table-all" id="paymentTable">
 			<caption>Item in Cart</caption>
 			<tr>
 				<th style="background-color: #3f51b5">
@@ -97,13 +98,12 @@
 				<td colspan="4" style="text-align: right">
 					Total | Rp.
 				</td>
-				<td th:text="${total}"colspan="2">
+				<td  th:text="${total}" colspan="2">
 					xxx
 				</td>
 			</tr>
 		</table>
-		<form name="form_2" action="/user/purchase" method="post">
-			<div class="w3-section">
+            <div class="w3-section">
                 <select class="w3-input w3-dropdown w3-border" id="paymentMethod" name="paymentMethod" required="" onchange="showModal()">
                     <option value="">- Select payment method</option>
                     <option value="cash">Cash</option>
@@ -112,30 +112,28 @@
                 </select>
             </div>
 
-			<br><br>
+            <br><br>
 
             <!--Displaying dialog box for payment-->
             <!--Cash-->
             <div class="w3-modal-content" id="paymentBoxCash">
                 <br>
-				<input class="w3-input w3-border" type="number" id="totalCash" name="totalCash" placeholder="Cash" autocomplete="off" autofocus style="margin-left: 302px" onblur="change()"/>
-				<p style="margin-left: 302px">Change</p>
-                <input class="w3-input w3-border" th:value="${change}" type="number" id="totalChange" name="totalChange" readonly style="display: none; margin-left: 302px"/>
+                <input class="w3-input w3-border" type="number" id="totalCash" name="totalCash" placeholder="Cash" autocomplete="off" autofocus style="margin-left: 302px"/>
             </div>
 
             <!--Credit/Debit-->
             <div class="w3-modal-content" id="paymentBoxCD">
-				<br>
+                <br>
                 <input class="w3-input w3-border" th:value="${total}" type="number" id="totalCD" name="totalCD" placeholder="Payment" autocomplete="off" autofocus style="margin-left: 302px"/>
-				<br>
+                <br>
                 <input class="w3-input w3-border" type="number" id="referenceNumber" name="referenceNumber" placeholder="Reference Number"  style="margin-left: 302px" autocomplete="off" />
             </div>
 
-			<br>
+            <br>
 
             <button type="submit" class="w3-button w3-block w3-padding-large w3-indigo w3-margin-bottom" id="finishButton">Purchase</button>
         </form>
-	</div>
+    </div>
 	<!-- End page content -->
 </div>
 <script>
@@ -166,15 +164,6 @@
             modalCash.style.display = "none";
             modalCD.style.display = "none";
         }
-
-    }
-    function change() {
-	    var cash = document.getElementById("totalCash").value;
-	    var change = document.getElementById("totalChange");
-
-	    if (cash != null){
-	        change.style.display = "block";
-		}
 
     }
 </script>
