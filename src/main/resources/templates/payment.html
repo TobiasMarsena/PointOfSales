@@ -104,11 +104,11 @@
 			</tr>
 		</table>
             <div class="w3-section">
-                <select class="w3-input w3-dropdown w3-border" id="paymentMethod" name="paymentMethod" required="" onchange="showModal()">
-                    <option value="">- Select payment method</option>
+                <select class="w3-input w3-dropdown w3-border" id="paymentMethod" name="paymentMethod" required="" >
+                    <!--<option value="">- Select payment method</option>-->
                     <option value="cash">Cash</option>
-                    <option value="credit">Credit</option>
-                    <option value="debit">Debit</option>
+                    <!--<option value="credit">Credit</option>-->
+                    <!--<option value="debit">Debit</option>-->
                 </select>
             </div>
 
@@ -121,13 +121,13 @@
                 <input class="w3-input w3-border" type="number" id="totalCash" name="totalCash" placeholder="Cash" autocomplete="off" autofocus style="margin-left: 302px"/>
             </div>
 
-            <!--Credit/Debit-->
-            <div class="w3-modal-content" id="paymentBoxCD">
-                <br>
-                <input class="w3-input w3-border" th:value="${total}" type="number" id="totalCD" name="totalCD" placeholder="Payment" autocomplete="off" autofocus style="margin-left: 302px"/>
-                <br>
-                <input class="w3-input w3-border" type="number" id="referenceNumber" name="referenceNumber" placeholder="Reference Number"  style="margin-left: 302px" autocomplete="off" />
-            </div>
+            <!--&lt;!&ndash;Credit/Debit&ndash;&gt;-->
+            <!--<div class="w3-modal-content" id="paymentBoxCD">-->
+                <!--<br>-->
+                <!--<input class="w3-input w3-border" th:value="${total}" type="number" id="totalCD" name="totalCD" placeholder="Payment" autocomplete="off" autofocus style="margin-left: 302px"/>-->
+                <!--<br>-->
+                <!--<input class="w3-input w3-border" type="number" id="referenceNumber" name="referenceNumber" placeholder="Reference Number"  style="margin-left: 302px" autocomplete="off" />-->
+            <!--</div>-->
 
             <br>
 

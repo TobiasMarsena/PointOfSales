@@ -197,7 +197,6 @@ public class WebController {
         return "payment";
     }
 
-//    DONE
 //    Admin Controller
     @RequestMapping(path = "/admin")
     public String admin(Model model) {
